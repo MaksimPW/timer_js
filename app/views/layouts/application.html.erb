@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>HoursManager</title>
 	 <link href="/assets/logo.ico" rel="shortcut icon" type="image/x-icon" />
 	<%= stylesheet_link_tag "application", media: "all",
@@ -13,21 +14,32 @@
 
 </head>
 <body>
+
     <header class="navbar navbar-fixed-top navbar-inverse">
+
+	<% if user_signed_in? %>
+	    <span>Hello, <%= current_user.email %></span>
+	<% end %>
+
       <div class="navbar-inner">
         <div class="container">
         	<img alt="Rails" src="/assets/logo.png" width="40" />
-          <%= link_to "Hours Manager", '#', id: "logo" %>
+          <%= link_to "Hours Manager", root_path, id: "logo" %>
           <nav>
             <ul class="nav pull-right">
               <li><%= link_to "Timers", timer_path %></li>
               <li><%= link_to "Routes", routes_path %></li>
-              <li><%= link_to "Exit", '#' %></li>
+    <% if user_signed_in? %>
+	    <li><%= link_to 'Exit', destroy_user_session_path, :method => :delete %></li>
+	<% else %>
+	    <li><%= link_to 'Login', new_user_session_path %> or <%= link_to 'Register', new_user_registration_path %></li>
+	<% end %>
             </ul>
           </nav>
         </div>
       </div>
     </header>
+
     <div class="container">
       <%= yield %>
     </div>

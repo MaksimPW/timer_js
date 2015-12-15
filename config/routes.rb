@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users
+  get 'persons/profile'
+
   # Ставим роутинг timer#home на URL timer
   get 'timer' => 'timer#home'
 
   resources :routes
 
   root 'routes#index'
+
+  get 'persons/profile', as: 'user_root'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
